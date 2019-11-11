@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../utils/api";
 
-const Login = () => {
+const Login = props => {
   const [user, setUser] = useState({
     username: "",
     password: ""
@@ -19,7 +19,7 @@ const Login = () => {
       .then(res => {
         localStorage.setItem("token", res.data.payload);
         console.log("login success");
-        // props.history.push("/");
+        props.history.push("/bubble-page");
       })
       .catch(err => {
         console.log("login error", err.data.message);
