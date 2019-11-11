@@ -20,8 +20,10 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
 
     api()
-      .put(`/api/colors/${colors.id}`, colorToEdit)
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
+        setEditing(false);
+        window.location.reload();
         console.log("save success", res.data);
       })
       .catch(err => {
@@ -36,6 +38,7 @@ const ColorList = ({ colors, updateColors }) => {
     api()
       .delete(`/api/colors/${color.id}`)
       .then(res => {
+        window.location.reload();
         console.log("deleted", res.data);
       })
       .catch(err => {
