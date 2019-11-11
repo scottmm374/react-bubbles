@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PrivateRoute from "../utils/PrivateRoute";
 import axios from "axios";
 import api from "../utils/api";
 
@@ -15,13 +16,14 @@ const BubblePage = () => {
       .get("/api/colors")
       .then(res => {
         setColorList(res.data);
-        console.log("successful Bubbles");
+        // console.log("successful Bubbles");
       })
       .catch(err => {
-        console.log("Did not get", err);
+        // console.log("Did not get", err);
       });
   }, []);
 
+  console.log("colorList", colorList);
   return (
     <>
       <ColorList colors={colorList} updateColors={setColorList} />
