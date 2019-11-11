@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 
 const initialColor = {
   color: "",
@@ -18,15 +18,35 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
+
+    api()
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res => {
+        setEditing(false);
+        window.location.reload();
+        console.log("save success", res.data);
+      })
+      .catch(err => {
+        console.log("edit not saved", err.message);
+      });
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
   };
 
   const deleteColor = color => {
+    api()
+      .delete(`/api/colors/${color.id}`)
+      .then(res => {
+        window.location.reload();
+        console.log("deleted", res.data);
+      })
+      .catch(err => {
+        console.log("color not deleted", err);
+      });
     // make a delete request to delete this color
   };
-
+  console.log("color to edit", colorToEdit);
   return (
     <div className="colors-wrap">
       <p>colors</p>
@@ -34,12 +54,14 @@ const ColorList = ({ colors, updateColors }) => {
         {colors.map(color => (
           <li key={color.color} onClick={() => editColor(color)}>
             <span>
-              <span className="delete" onClick={e => {
-                    e.stopPropagation();
-                    deleteColor(color)
-                  }
-                }>
-                  x
+              <span
+                className="delete"
+                onClick={e => {
+                  e.stopPropagation();
+                  deleteColor(color);
+                }}
+              >
+                x
               </span>{" "}
               {color.color}
             </span>
