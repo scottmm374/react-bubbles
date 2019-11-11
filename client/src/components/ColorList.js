@@ -20,12 +20,12 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
 
     api()
-      .put(`/api/colors/${colors.id}`, updateColors)
+      .put(`/api/colors/${colors.id}`, colorToEdit)
       .then(res => {
         console.log("save success", res.data);
       })
       .catch(err => {
-        console.log("edit not saved", err);
+        console.log("edit not saved", err.message);
       });
     // Make a put request to save your updated color
     // think about where will you get the id from...
@@ -43,7 +43,7 @@ const ColorList = ({ colors, updateColors }) => {
       });
     // make a delete request to delete this color
   };
-
+  console.log("color to edit", colorToEdit);
   return (
     <div className="colors-wrap">
       <p>colors</p>
